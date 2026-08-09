@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contri or Treat? 🍕💸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF3DD;
+    --cherry:#D62839;
+    --cherry-dark:#A61E2C;
+    --mustard:#F2A541;
+    --mustard-dark:#C97F1F;
+    --charcoal:#241C15;
+    --mint:#4FB477;
+    --paper:#FFFDF7;
+    --shadow: rgba(36,28,21,0.18);
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    background: var(--cream);
+    background-image:
+      radial-gradient(circle at 8% 12%, rgba(214,40,57,0.07) 0, transparent 40%),
+      radial-gradient(circle at 92% 85%, rgba(242,165,65,0.10) 0, transparent 45%);
+    font-family:'Nunito', sans-serif;
+    color: var(--charcoal);
+    overflow-x:hidden;
+  }
+
+  .wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+    position:relative;
+  }
+
+  /* ---------- header ---------- */
+  .eyebrow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-weight:800;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:12px;
+    color: var(--cherry-dark);
+    margin-bottom: 10px;
+  }
+  .eyebrow .dot{
+    width:6px;height:6px;border-radius:50%;background:var(--mustard-dark);
+  }
+
+  h1.headline{
+    font-family:'Fredoka', sans-serif;
+    font-weight:700;
+    text-align:center;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height:1.02;
+    margin: 0 0 14px;
+    color: var(--charcoal);
+    letter-spacing: -0.01em;
+  }
+  h1.headline .accent{
+    color: var(--cherry);
+    position:relative;
+    display:inline-block;
+  }
+  h1.headline .accent2{
+    color: var(--mustard-dark);
+  }
+
+  p.sub{
+    text-align:center;
+    max-width: 480px;
+    margin: 0 auto 46px;
+    font-size: 1.05rem;
+    color:#5b4f42;
+    font-weight:600;
+  }
+
+  .bill-badge{
+    display:block;
+    text-align:center;
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    background: var(--charcoal);
+    color: var(--cream);
+    max-width: 220px;
+    margin: 0 auto 40px;
+    padding: 9px 18px;
+    border-radius: 30px;
+    box-shadow: 0 5px 0 #100c07;
+  }
+  .bill-badge span{ color:#ffd479; font-weight:700; }
+
+  .r-extra{
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 2px dashed rgba(36,28,21,0.25);
+    font-size:0.9rem;
+    font-weight:800;
+    animation: dropdown .4s ease both;
+  }
+  .r-extra.hidden{ display:none; }
+  .r-extra .upi-line{
+    background: rgba(214,40,57,0.08);
+    color: var(--cherry-dark);
+    padding: 10px 8px;
+    border-radius: 8px;
+    word-break: break-all;
+  }
+  .r-extra .wa-line{
+    color: #1f8a4c;
+  }
+  .r-extra a.wa-link{
+    display:inline-block;
+    margin-top:10px;
+    background:#25D366;
+    color:#fff;
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius: 24px;
+    font-size:0.85rem;
+    box-shadow: 0 4px 0 #1a9e4d;
+  }
+
+  /* ---------- vs divider ---------- */
+  .arena{
+    position:relative;
+    display:flex;
+    gap:22px;
+    align-items:stretch;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  .vs-badge{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background: var(--charcoal);
+    color: var(--cream);
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    width:56px;height:56px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.95rem;
+    box-shadow: 0 8px 18px var(--shadow);
+    z-index:5;
+    animation: spin-slow 7s linear infinite;
+  }
+  @keyframes spin-slow{
+    0%{transform:translate(-50%,-50%) rotate(0deg);}
+    100%{transform:translate(-50%,-50%) rotate(360deg);}
+  }
+
+  /* ---------- cards ---------- */
+  .card{
+    background: var(--paper);
+    border-radius: 26px;
+    padding: 34px 26px 28px;
+    width: 340px;
+    max-width: 90vw;
+    border: 3px solid transparent;
+    cursor:pointer;
+    text-align:center;
+    box-shadow: 0 10px 0 var(--shadow), 0 18px 30px rgba(36,28,21,0.10);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    position:relative;
+    user-select:none;
+  }
+  .card:hover{
+    transform: translateY(-6px);
+  }
+  .card:active{
+    transform: translateY(-1px) scale(0.98);
+  }
+  .card.contri{ border-color: rgba(214,40,57,0.0); }
+  .card.contri:hover{ border-color: var(--cherry); }
+  .card.chow{ border-color: rgba(242,165,65,0.0); }
+  .card.chow:hover{ border-color: var(--mustard-dark); }
+
+  .card.selected.contri{ border-color: var(--cherry); box-shadow: 0 10px 0 var(--cherry-dark), 0 18px 30px rgba(214,40,57,0.20);}
+  .card.selected.chow{ border-color: var(--mustard-dark); box-shadow: 0 10px 0 var(--mustard-dark), 0 18px 30px rgba(242,165,65,0.24);}
+
+  .card .stamp{
+    position:absolute;
+    top:-14px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background: var(--charcoal);
+    color:var(--cream);
+    padding:5px 14px;
+    border-radius:20px;
+  }
+  .card.contri .stamp{ background: var(--cherry); }
+  .card.chow .stamp{ background: var(--mustard-dark); }
+
+  .card .emoji-row{
+    font-size: 2.8rem;
+    margin: 14px 0 6px;
+    line-height:1;
+  }
+  .card .emoji-row span{
+    display:inline-block;
+    animation: bob 2.2s ease-in-out infinite;
+  }
+  .card .emoji-row span:nth-child(2){ animation-delay:.2s; }
+  .card .emoji-row span:nth-child(3){ animation-delay:.4s; }
+  @keyframes bob{
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-8px) rotate(-6deg); }
+  }
+
+  .card h2{
+    font-family:'Fredoka', sans-serif;
+    font-size:1.5rem;
+    margin: 4px 0 8px;
+  }
+  .card.contri h2{ color: var(--cherry-dark); }
+  .card.chow h2{ color: var(--mustard-dark); }
+
+  .card p.desc{
+    font-size:0.94rem;
+    color:#5b4f42;
+    font-weight:600;
+    margin: 0 0 18px;
+    min-height: 42px;
+  }
+
+  .card .tag-row{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom: 20px;
+  }
+  .card .tag{
+    font-size:0.72rem;
+    font-weight:800;
+    padding:5px 10px;
+    border-radius: 20px;
+    background: rgba(36,28,21,0.06);
+    color:#5b4f42;
+  }
+
+  .card button.pick-btn{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    border:none;
+    border-radius: 14px;
+    padding: 12px 0;
+    width:100%;
+    cursor:pointer;
+    color:var(--cream);
+    transition: transform .12s ease, filter .12s ease;
+  }
+  .card.contri button.pick-btn{ background: var(--cherry); }
+  .card.chow button.pick-btn{ background: var(--mustard-dark); }
+  .card button.pick-btn:hover{ filter:brightness(1.08); transform: translateY(-2px); }
+  .card button.pick-btn:active{ transform: translateY(0); }
+
+  /* ---------- flip for me ---------- */
+  .flip-zone{
+    text-align:center;
+    margin: 40px 0 6px;
+  }
+  .flip-btn{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    background: var(--charcoal);
+    color: var(--cream);
+    border:none;
+    border-radius: 30px;
+    padding: 12px 26px;
+    font-size:0.95rem;
+    cursor:pointer;
+    box-shadow: 0 6px 0 #100c07;
+    transition: transform .12s ease;
+  }
+  .flip-btn:hover{ transform: translateY(-2px); }
+  .flip-btn:active{ transform: translateY(3px); box-shadow: 0 3px 0 #100c07; }
+  .coin{
+    display:inline-block;
+    margin-right:8px;
+  }
+  .coin.spinning{
+    animation: coinspin .7s linear infinite;
+  }
+  @keyframes coinspin{
+    0%{ transform: rotateY(0deg); }
+    100%{ transform: rotateY(360deg); }
+  }
+
+  /* ---------- receipt / result ---------- */
+  .receipt-wrap{
+    display:flex;
+    justify-content:center;
+    margin-top: 44px;
+    min-height: 10px;
+  }
+
+  .receipt{
+    width: 300px;
+    max-width: 90vw;
+    background: var(--paper);
+    padding: 26px 22px 30px;
+    font-family:'Nunito', monospace;
+    text-align:center;
+    box-shadow: 0 14px 26px rgba(36,28,21,0.16);
+    border-radius: 4px;
+    position:relative;
+    transform-origin: top center;
+    animation: dropdown .5s cubic-bezier(.2,1.4,.4,1) both;
+    clip-path: polygon(
+      0% 0%, 100% 0%, 100% 96%,
+      92% 100%, 84% 96%, 76% 100%, 68% 96%, 60% 100%,
+      52% 96%, 44% 100%, 36% 96%, 28% 100%, 20% 96%,
+      12% 100%, 4% 96%, 0% 100%
+    );
+  }
+  @keyframes dropdown{
+    0%{ transform: scaleY(0); opacity:0; }
+    60%{ transform: scaleY(1.06); opacity:1; }
+    100%{ transform: scaleY(1); opacity:1; }
+  }
+  .receipt.hidden{ display:none; }
+
+  .receipt .r-title{
+    font-family:'Fredoka', sans-serif;
+    font-weight:700;
+    font-size:1.2rem;
+    margin-bottom:6px;
+  }
+  .receipt.result-contri .r-title{ color: var(--cherry-dark); }
+  .receipt.result-chow .r-title{ color: var(--mustard-dark); }
+
+  .receipt .r-emoji{
+    font-size: 2.4rem;
+    margin: 10px 0;
+  }
+  .receipt hr{
+    border:none;
+    border-top: 2px dashed rgba(36,28,21,0.25);
+    margin: 14px 0;
+  }
+  .receipt .r-line{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.85rem;
+    font-weight:700;
+    margin: 4px 0;
+    color:#5b4f42;
+  }
+  .receipt .r-msg{
+    font-size:0.92rem;
+    font-weight:700;
+    margin-top: 14px;
+    color: var(--charcoal);
+  }
+  .receipt .r-foot{
+    margin-top:16px;
+    font-size:0.7rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:800;
+    color:#a89d8d;
+  }
+
+  /* ---------- confetti ---------- */
+  .confetti-piece{
+    position: fixed;
+    top: -40px;
+    font-size: 1.6rem;
+    pointer-events:none;
+    z-index: 999;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+  @keyframes fall{
+    0%{ transform: translateY(0) rotate(0deg); opacity:1; }
+    100%{ transform: translateY(110vh) rotate(540deg); opacity:0.9; }
+  }
+
+  footer{
+    text-align:center;
+    margin-top: 60px;
+    font-size:0.78rem;
+    font-weight:700;
+    color:#a89d8d;
+    letter-spacing:0.04em;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="eyebrow"><span class="dot"></span> DECISION COUNTER <span class="dot"></span></div>
+  <h1 class="headline">Contri <span class="accent2">or</span> <span class="accent">Treat?</span> 🍕</h1>
+  <p class="sub">One tummy, one wallet, two roads. Pick your fate for tonight 👇</p>
+  <div class="bill-badge">🧾 Your Contri: <span>₹750</span></div>
+
+  <div class="arena">
+    <div class="vs-badge">VS</div>
+
+    <div class="card contri" id="cardContri" tabindex="0" role="button" aria-label="Pay the contribution">
+      <div class="stamp">Sweet One</div>
+      <div class="emoji-row"><span>💰</span><span>🤝</span><span>🎉</span></div>
+      <h2>Pay the Contri</h2>
+      <p class="desc">Split it fair and easy.</p>
+      <div class="tag-row">
+        <span class="tag">Just us two</span>
+        <span class="tag">Zero cooking</span>
+      </div>
+      <button class="pick-btn" data-choice="contri">I wl pay contri 💸</button>
+    </div>
+
+    <div class="card chow" id="cardChow" tabindex="0" role="button" aria-label="Go outside for food">
+      <div class="stamp">Free Spirit</div>
+      <div class="emoji-row"><span>🍔</span><span>🚶‍♀️</span><span>🥤</span></div>
+      <h2>Go Out & Eat</h2>
+      <p class="desc">Pick any place you love, ur treat, just us.</p>
+      <div class="tag-row">
+        <span class="tag">Your pick</span>
+        <span class="tag">Fresh air</span>
+      </div>
+      <button class="pick-btn" data-choice="chow">Let's go 🍜</button>
+    </div>
+  </div>
+
+  <div class="flip-zone">
+    <button class="flip-btn" id="flipBtn"><span class="coin" id="coinIcon">🪙</span>Can't decide? Flip for me</button>
+  </div>
+
+  <div class="receipt-wrap">
+    <div class="receipt hidden" id="receipt"></div>
+  </div>
+
+  <footer>made with 🍕 + 💸 for decisions that actually matter</footer>
+</div>
+
+<script>
+  const cardContri = document.getElementById('cardContri');
+  const cardChow = document.getElementById('cardChow');
+  const receipt = document.getElementById('receipt');
+  const flipBtn = document.getElementById('flipBtn');
+  const coinIcon = document.getElementById('coinIcon');
+
+  const CONFETTI = {
+    contri: ['💰','🎉','🤝','✨','💵'],
+    chow: ['🍔','🍕','🥤','🌮','🍟']
+  };
+
+  const UPI_ID = '9696502695';
+  const WA_NUMBER = '919696502695';
+
+  const RESULTS = {
+    contri: {
+      title: 'Contri Secured ✅',
+      emoji: '💰🎉',
+      lines: [['Your Contri','₹750'],['Status','Locked in'],['Regret level','0%']],
+      msg: "Your contri amount is ₹750 🥳",
+      extraHTML: `
+        <div class="upi-line">UPI: ${UPI_ID}</div>
+        <div style="margin-top:8px;">this is my UPI number, send it here 👆</div>
+      `
+    },
+    chow: {
+      title: 'Out We Go 🚶‍♀️',
+      emoji: '🍔🥤',
+      lines: [['Bill','On manvi'],['Status','Let\'s roll'],['Place','Your pick 📍']],
+      msg: "YAYYYY 🎉 you made an awesome decision!! Let's goo out at some good place of your choice 🥰",
+      extraHTML: null // filled in after poppers finish
+    }
+  };
+
+  function launchConfetti(kind){
+    const emojis = CONFETTI[kind];
+    for(let i=0;i<26;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      piece.style.left = Math.random()*100 + 'vw';
+      piece.style.animationDuration = (2.2 + Math.random()*1.6) + 's';
+      piece.style.animationDelay = (Math.random()*0.4) + 's';
+      piece.style.fontSize = (1.1 + Math.random()*1.2) + 'rem';
+      document.body.appendChild(piece);
+      setTimeout(()=> piece.remove(), 4200);
+    }
+  }
+
+  function showResult(kind){
+    cardContri.classList.toggle('selected', kind === 'contri');
+    cardChow.classList.toggle('selected', kind === 'chow');
+
+    const r = RESULTS[kind];
+    receipt.className = 'receipt result-' + kind;
+    receipt.innerHTML = `
+      <div class="r-title">${r.title}</div>
+      <div class="r-emoji">${r.emoji}</div>
+      <hr/>
+      ${r.lines.map(l => `<div class="r-line"><span>${l[0]}</span><span>${l[1]}</span></div>`).join('')}
+      <hr/>
+      <div class="r-msg">${r.msg}</div>
+      ${r.extraHTML ? `<div class="r-extra">${r.extraHTML}</div>` : `<div class="r-extra hidden" id="chowExtra"></div>`}
+      <div class="r-foot">Decision printed &nbsp;•&nbsp; ${new Date().toLocaleTimeString()}</div>
+    `;
+    launchConfetti(kind);
+    receipt.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+    // extra poppers burst for the "chow" choice, then reveal whatsapp message after they settle
+    if(kind === 'chow'){
+      setTimeout(()=> launchConfetti('chow'), 500);
+      setTimeout(()=>{
+        const extra = document.getElementById('chowExtra');
+        if(extra){
+          extra.classList.remove('hidden');
+          extra.innerHTML = `
+            <div class="wa-line">now do text me on whatsapp 📲</div>
+            <a class="wa-link" href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener">Message on WhatsApp</a>
+          `;
+        }
+      }, 2400);
+    }
+  }
+
+  document.querySelectorAll('.pick-btn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      showResult(btn.dataset.choice);
+    });
+  });
+  cardContri.addEventListener('click', ()=> showResult('contri'));
+  cardChow.addEventListener('click', ()=> showResult('chow'));
+  cardContri.addEventListener('keydown', (e)=>{ if(e.key==='Enter') showResult('contri'); });
+  cardChow.addEventListener('keydown', (e)=>{ if(e.key==='Enter') showResult('chow'); });
+
+  flipBtn.addEventListener('click', ()=>{
+    coinIcon.classList.add('spinning');
+    flipBtn.disabled = true;
+    setTimeout(()=>{
+      coinIcon.classList.remove('spinning');
+      flipBtn.disabled = false;
+      const pick = Math.random() < 0.5 ? 'contri' : 'chow';
+      showResult(pick);
+    }, 900);
+  });
+</script>
+
+</body>
+</html>
